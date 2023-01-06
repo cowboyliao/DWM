@@ -2100,7 +2100,7 @@ void
 updatestatus(void)
 {
 	if (!gettextprop(root, XA_WM_NAME, stext, sizeof(stext)))
-		strcpy(stext, "FUCK,2023!Dream,Begin!");
+		strcpy(stext, "言えない夢ばかりだ");
 	drawbar(selmon);
 }
 
