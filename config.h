@@ -41,8 +41,8 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "T",      tile },    /* first entry is default */
-	{ "F",      NULL },    /* no layout function means floating behavior */
+	{ "",      tile },    /* first entry is default */
+	{ "",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
 };
 
@@ -61,19 +61,16 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_azure, "-nf", col_crimson, "-sb", col_celeste, "-sf", col_springgreen, NULL };
 static const char *termcmd[]  = { "st", NULL };
-static const char scratchpadname[] = "scratchpad";
-static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_grave,  togglescratch,  {.v = scratchpadcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_e,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_u,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_y,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_l,      incnmaster,     {.i = -1 } },
+	{ MODKEY,                       XK_w,      incnmaster,     {.i = +1 } },
+	{ MODKEY,                       XK_q,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_n,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_i,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
@@ -91,6 +88,14 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+  { MODKEY,                       XK_s, scratchpad_show, {.i = 1} },
+  { MODKEY,                       XK_y, scratchpad_show, {.i = 2} },
+  { MODKEY,                       XK_u, scratchpad_show, {.i = 3} },
+  { MODKEY|ShiftMask,                       XK_s, scratchpad_hide, {.i = 1} },
+  { MODKEY|ShiftMask,                       XK_y, scratchpad_hide, {.i = 2} },
+  { MODKEY|ShiftMask,                       XK_u, scratchpad_hide, {.i = 3} },
+  { MODKEY|ShiftMask,             XK_r,      scratchpad_remove,           {0} },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -100,7 +105,6 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 };
 
 /* button definitions */
